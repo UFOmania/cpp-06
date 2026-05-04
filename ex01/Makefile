@@ -1,4 +1,4 @@
-FLAGS	=	-Wall -Wextra -Werror
+FLAGS	=	-Wall -Wextra -Werror -std=c++98
 SRC		=	Serializer.cpp		main.cpp
 OBJ		=	$(SRC:.cpp=.o)
 

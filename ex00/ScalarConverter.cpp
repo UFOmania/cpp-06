@@ -37,7 +37,7 @@ int ScalarConverter::parseInput(std::string const & input)
 
     int inputLen = input.length();
 
-    //invalid inout
+    //invalid inpout
     if (inputLen == 0)
         throw std::runtime_error("Invalid input");
 
@@ -162,6 +162,7 @@ void ScalarConverter::IntHandler(std::string const & input)
         double d = static_cast<double>(buff);
         std::cout << "double: " << d << "\n";
 }
+
 void ScalarConverter::floatHandler(std::string & input)
 {
     input.pop_back();
@@ -203,6 +204,7 @@ void ScalarConverter::floatHandler(std::string & input)
     std::cout << "float: " << buff << "f\n";
     std::cout << "double: " << strtod(input.c_str(), NULL) << "\n";
 }
+
 void ScalarConverter::doubleHandler(std::string const & input)
 {
     int dot_pos = input.find('.');

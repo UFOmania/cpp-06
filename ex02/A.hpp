@@ -4,14 +4,8 @@
 #include "Base.hpp"
 
 
-class A : private Base 
+class A : public Base 
 {
-    public:
-        int a;
-        void foo(){
-            a = 987;
-            std::cout << "hi\n";
-        };
 
 };
 

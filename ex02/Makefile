@@ -1,4 +1,4 @@
-FLAGS	=	#-Wall -Wextra -Werror -fsanitize=address
+FLAGS	=	-Wall -Wextra -Werror -std=c++98
 SRC		=	Base.cpp 		main.cpp
 OBJ		=	$(SRC:.cpp=.o)
 

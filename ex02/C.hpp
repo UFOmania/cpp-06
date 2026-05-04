@@ -6,10 +6,6 @@
 
 class C : public Base 
 {
-    void hi()
-    {
-        std::cout << "C\n";
-    };
 };
 
 

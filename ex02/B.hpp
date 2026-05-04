@@ -6,8 +6,6 @@
 
 class B : public Base 
 {
-    public:
-        void bb() {std::cout << "bb\n";};
 };
 
 

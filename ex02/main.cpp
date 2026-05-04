@@ -14,8 +14,8 @@ Base *generate()
 
     switch (idx)
     {
-        // case 1:
-        //     return new A;
+        case 1:
+            return new A;
         case 2:
             return new B;
         case 3:
