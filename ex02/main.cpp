@@ -10,7 +10,7 @@
 Base *generate()
 {
 
-    int idx = (std::rand() % 3) + 1;
+    int idx = (std::rand() % 4);
 
     switch (idx)
     {
