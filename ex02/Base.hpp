@@ -6,6 +6,9 @@ class Base
 {
     public:
         virtual ~Base();
+        Base();
+        Base(const Base &);
+        Base &operator=(const Base &);
 };
 
 

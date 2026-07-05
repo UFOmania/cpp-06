@@ -10,7 +10,7 @@
 Base *generate()
 {
 
-    int idx = (std::rand() % 4);
+    int idx = (std::rand() % 3) + 1;
 
     switch (idx)
     {
@@ -34,45 +34,51 @@ void    indentify(Base * ptr)
     A * a = dynamic_cast<A *>(ptr);
     if (a)
     {
-        std::cout << "obj is A\n";
+        std::cout << "ptr is A -> : " << a->addTwo(13, 39) << std::endl;
         return;
     }
 
     B * b = dynamic_cast<B *>(ptr);
     if (b)
     {
-        std::cout << "obj is B\n";
+        std::string str("hello world");
+        b->toUpper(str);
+        std::cout << "ptr is B -> : " << str << std::endl;
         return;
     }
 
     C * c = dynamic_cast<C *>(ptr);
     if (c)
     {
-        std::cout << "obj is C\n";
+        std::cout << "ptr is C -> : ";
+        c->sayHi();
         return;
     }
 }
 
-void    indentify(Base & ptr)
+void    indentify(Base & obj)
 {
     try
     {
-        A a = dynamic_cast<A &>(ptr);
-        std::cout << "obj is A\n";
+        A a = dynamic_cast<A &>(obj);
+        std::cout << "obj is A -> : " << a.addTwo(13, 29) << std::endl;
     }
     catch(const std::exception& )
     {}
     try
     {
-        B b = dynamic_cast<B &>(ptr);
-        std::cout << "obj is B\n";
+        B b = dynamic_cast<B &>(obj);
+        std::string str("hello world");
+        b.toUpper(str);
+        std::cout << "obj is B -> : " << str << std::endl;
     }
     catch(const std::exception& )
     {}
     try
     {
-        C c = dynamic_cast<C &>(ptr);
-        std::cout << "obj is C\n";
+        C c = dynamic_cast<C &>(obj);
+        std::cout << "obj is C -> : ";
+        c.sayHi();
     }
     catch(const std::exception& )
     {}
@@ -99,4 +105,5 @@ int main()
         indentify(*b);
         delete b;
     }
+    
 }

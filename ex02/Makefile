@@ -1,5 +1,5 @@
 FLAGS	=	-Wall -Wextra -Werror -std=c++98
-SRC		=	Base.cpp 		main.cpp
+SRC		=	Base.cpp A.cpp B.cpp C.cpp main.cpp
 OBJ		=	$(SRC:.cpp=.o)
 
 

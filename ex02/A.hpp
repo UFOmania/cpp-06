@@ -6,7 +6,12 @@
 
 class A : public Base 
 {
-
+    public:
+        ~A();
+        A();
+        A(const A &);
+        A &operator=(const A &);
+        int addTwo(int, int);
 };
 
 

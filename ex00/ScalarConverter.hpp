@@ -3,6 +3,12 @@
 #define SCALARCONVERTER_HPP
 
 #include <string>
+#include <cstdlib>
+#include <errno.h>
+#include <climits>
+#include <sstream>
+
+
 
 class ScalarConverter
 {
@@ -16,13 +22,12 @@ class ScalarConverter
         static void IntHandler(std::string const & input);
         static void doubleHandler(std::string const & input);
         static void floatHandler(std::string & input);
-
-    public:
-        ~ScalarConverter();
-        ScalarConverter();
-        ScalarConverter(ScalarConverter const & other);
-        ScalarConverter &operator=(ScalarConverter const & other);
-
+		ScalarConverter();
+		~ScalarConverter();
+		ScalarConverter(const ScalarConverter &);
+		ScalarConverter &operator=(const ScalarConverter &);
+		
+	public:
         static void convert(const char * str);
 };
 

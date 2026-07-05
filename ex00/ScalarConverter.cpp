@@ -2,49 +2,49 @@
 #include <iostream>
 #include <iomanip>
 
-ScalarConverter::~ScalarConverter(){}
 ScalarConverter::ScalarConverter(){}
-ScalarConverter::ScalarConverter(ScalarConverter const & ){}
-ScalarConverter &ScalarConverter::operator=(ScalarConverter const & ){return *this;}
-
-
-
+ScalarConverter::~ScalarConverter(){}
+ScalarConverter::ScalarConverter(const ScalarConverter &){}
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &){return *this;}
 
 int ScalarConverter::parseInput(std::string const & input)
 {
-    std::string float_specails[] = { "-inff", "+inff", "nanf"};
-    std::string double_specails[] = {"+inf", "-inf", "nan"};
-    std::string normalizedInput;
-    for(int i = 0; i < static_cast<int>(input.length()); ++i)
-    {
-        if (std::isupper(input[i]))
-            normalizedInput += static_cast<char>(std::tolower(input[i]));
-        else
-            normalizedInput += input[i];
-    }
+	
+	{
+		std::string float_specails[] = { "-inff", "+inff", "nanf"};
+		std::string double_specails[] = {"+inf", "-inf", "nan"};
 
-    for (int i = 0; i < 3; i++)
-    {
-        if (float_specails[i] == normalizedInput)
-            return E_FLOAT;
-    }
-    for (int i = 0; i < 3; i++)
-    {
-        if (double_specails[i] == normalizedInput)
-            return E_DOUBLE;
-    }
-
-
+		std::string normalizedInput;
+		for(int i = 0; i < static_cast<int>(input.length()); ++i)
+		{
+			if (std::isupper(input[i]))
+            	normalizedInput += static_cast<char>(std::tolower(input[i]));
+			else
+            	normalizedInput += input[i];
+		}
+		
+		for (int i = 0; i < 3; i++)
+		{
+			if (float_specails[i] == normalizedInput)
+				return E_FLOAT;
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			if (double_specails[i] == normalizedInput)
+				return E_DOUBLE;
+		}
+	}
+	
+	
     int inputLen = input.length();
 
-    //invalid inpout
+
     if (inputLen == 0)
         throw std::runtime_error("Invalid input");
 
-    //char input
+
     else if (inputLen == 1)
     {
-        //single white space
         if (std::isspace(input[0]))
             throw std::runtime_error("Invalid input");
 
@@ -54,7 +54,7 @@ int ScalarConverter::parseInput(std::string const & input)
 
     }
 
-    //string input
+
     else
     {
         bool decimal = false;
@@ -68,11 +68,10 @@ int ScalarConverter::parseInput(std::string const & input)
             decimal = true;
         }
 
-        // 100% int 
         if (idx == inputLen)
             return E_INT;
 
-        //invalid eg: '45k'
+
         else if (input[idx] != '.')
             throw std::runtime_error("Invalid input");
 
@@ -80,7 +79,7 @@ int ScalarConverter::parseInput(std::string const & input)
         if (!decimal)
             throw std::runtime_error("Invalid input");
 
-        // after the '.'
+
         bool fractional = false;
         idx++;
         for (; idx < static_cast<int>(input.length()); idx++)
@@ -90,16 +89,13 @@ int ScalarConverter::parseInput(std::string const & input)
             fractional = true;
         }
 
-        // "0.f"
         if (!fractional)
             throw std::runtime_error("Invalid input");
 
 
-        // 100% double
         if (idx == inputLen)
             return E_DOUBLE;
         
-        // 100% float
         else if (idx == inputLen - 1 && input[idx] == 'f')
             return E_FLOAT;
 
@@ -126,10 +122,9 @@ void ScalarConverter::IntHandler(std::string const & input)
 {
     std::cout << std::fixed << std::setprecision(1);
     
-        errno = 0;
-        char *end = NULL;
-        long buff = strtol(input.c_str(), &end, 10);
-        if (*end != '\0' || errno == ERANGE || buff > INT32_MAX || buff < INT32_MIN)
+        std::stringstream ss(input);
+        int buff;
+        if (!(ss >> buff))
         {
             std::cout << "char: impossible\n";
             std::cout << "int: impossible\n";
@@ -165,7 +160,8 @@ void ScalarConverter::IntHandler(std::string const & input)
 
 void ScalarConverter::floatHandler(std::string & input)
 {
-    input.pop_back();
+    if (!input.empty())
+        input.erase(input.size() - 1);
 
 
     int dot_pos = input.find('.');
@@ -174,10 +170,11 @@ void ScalarConverter::floatHandler(std::string & input)
 
     std::cout << std::fixed << std::setprecision(precision);
     
-    errno = 0;
-    char *end = NULL;
-    float buff = strtof(input.c_str(), &end);
-    if (*end != '\0' || errno == ERANGE)
+
+    std::stringstream ss(input);
+    float buff;
+
+    if (!(ss >> buff))
     {
         std::cout << "char: impossible\n";
         std::cout << "int: impossible\n";
@@ -197,7 +194,7 @@ void ScalarConverter::floatHandler(std::string & input)
             std::cout << "char: " << c << "\n";
     }
     
-    if (buff > INT32_MAX || buff < INT32_MIN)
+    if (buff > static_cast<float>(INT_MAX) || buff < static_cast<float>(INT_MAX))
         std::cout << "int: impossible\n";
     else
         std::cout << "int: " << static_cast<int>(buff) << "\n";
@@ -213,10 +210,9 @@ void ScalarConverter::doubleHandler(std::string const & input)
 
     std::cout << std::fixed << std::setprecision(precision);
     
-    errno = 0;
-    char *end = NULL;
-    double buff = strtod(input.c_str(), &end);
-    if (*end != '\0' || errno == ERANGE)
+    std::stringstream ss(input);
+    double buff;
+    if (!(ss >> buff))
     {
         std::cout << "char: impossible\n";
         std::cout << "int: impossible\n";
@@ -236,7 +232,7 @@ void ScalarConverter::doubleHandler(std::string const & input)
             std::cout << "char: " << c << "\n";
     }
     
-    if (buff > INT32_MAX || buff < INT32_MIN)
+    if (buff > INT_MAX || buff < INT_MIN)
         std::cout << "int: impossible\n";
     else
         std::cout << "int: " << static_cast<int>(buff) << "\n";
